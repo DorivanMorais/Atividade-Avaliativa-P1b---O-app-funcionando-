@@ -11,5 +11,4 @@ Lê os parâmetros de impressão, calcula o custo final e salva o preço base do
 executar o arquivo HMTL
 
 **Aba Rede (Network):**
-*(Insira aqui o print da tela mostrando a requisição F12)*
-Como este projeto pertence à Trilha C (sem integração com API externa), a captura de tela da aba Rede exibe o navegador fazendo requisições de método GET (com status 200 OK ou 304 Not Modified) aos arquivos locais `index.html`, `style.css` e `script.js` para carregar a estrutura inicial da página no servidor local.
+Como este projeto pertence à Trilha C, a captura de tela da aba Rede exibe o navegador fazendo requisições de método GET aos arquivos locais `index.html`, `style.css` e `script.js` para carregar a estrutura inicial da página no servidor local.
