@@ -1,0 +1,53 @@
+// Referências aos elementos do DOM
+const spoolPriceInput = document.getElementById('spoolPrice');
+const partWeightInput = document.getElementById('partWeight');
+const printTimeInput = document.getElementById('printTime');
+const calculateBtn = document.getElementById('calculateBtn');
+const resultMessage = document.getElementById('resultMessage');
+
+// Taxa fixa de custo operacional (energia, desgaste) por hora
+const HOURLY_RATE = 1.50; 
+
+// Carrega o último preço salvo no localStorage ao abrir a página
+window.onload = function() {
+    const savedPrice = localStorage.getItem('savedSpoolPrice');
+    if (savedPrice) {
+        spoolPriceInput.value = savedPrice;
+    }
+};
+
+// Função principal de cálculo
+function calculateCost() {
+    const spoolPrice = parseFloat(spoolPriceInput.value);
+    const partWeight = parseFloat(partWeightInput.value);
+    const printTime = parseFloat(printTimeInput.value);
+
+    // Validação para evitar quebras com entradas vazias
+    if (isNaN(spoolPrice) || isNaN(partWeight) || isNaN(printTime)) {
+        resultMessage.textContent = "Aviso: Por favor, preencha todos os campos corretamente com valores numéricos.";
+        resultMessage.style.color = "red";
+        return;
+    }
+
+    if (spoolPrice <= 0 || partWeight <= 0 || printTime < 0) {
+        resultMessage.textContent = "Aviso: Os valores devem ser maiores que zero.";
+        resultMessage.style.color = "red";
+        return;
+    }
+
+    // Salva o preço do carretel no navegador
+    localStorage.setItem('savedSpoolPrice', spoolPrice);
+
+    // Lógica do cálculo: (Preço / 1000g) * peso + (Custo por hora * tempo)
+    const costPerGram = spoolPrice / 1000;
+    const materialCost = costPerGram * partWeight;
+    const operationCost = HOURLY_RATE * printTime;
+    const totalCost = materialCost + operationCost;
+
+    // Atualiza a tela de forma segura usando textContent
+    resultMessage.textContent = `Custo do Material: R$ ${materialCost.toFixed(2)} | Custo Total Estimado: R$ ${totalCost.toFixed(2)}`;
+    resultMessage.style.color = "black";
+}
+
+// Dispara a função no clique do botão
+calculateBtn.addEventListener('click', calculateCost);
